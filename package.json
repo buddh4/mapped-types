@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:cov": "jest --coverage --no-cache",
-    "build": "tsc"
+    "build": "tsc -p tsconfig.build.json"
   },
   "author": "",
   "license": "MIT",
