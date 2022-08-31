@@ -108,3 +108,6 @@ dist
 
 ## Rollup
 .rollup.cache
+
+## Generated code
+/lib
