@@ -11,7 +11,7 @@ export function IntersectionType<A, B>(
   classBRef: Type<B>
 ): Type<A & B> {
 
-  const ClassA = <any> classARef;
+  const ClassA = classARef as any;
 
   abstract class IntersectionTypeClass extends ClassA {
     constructor(...args) {

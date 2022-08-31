@@ -15,7 +15,7 @@ import {
  * @constructor
  */
 export function PartialType<T>(classRef: Type<T>): Type<Partial<T>> {
-  const RefClass = <any> classRef;
+  const RefClass = classRef as any;
   abstract class PartialTypeClass extends RefClass {}
 
   inheritValidationMetadata(classRef, PartialTypeClass);

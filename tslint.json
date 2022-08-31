@@ -1,0 +1,12 @@
+{
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "linterOptions": {
+    "exclude": [
+      "**/*.spec.ts"
+    ]
+  },
+  "rules": {
+    "ban-types": [true, ["Object", "Use {} instead."], ["String"]],
+    "no-shadowed-variable": false
+  }
+}

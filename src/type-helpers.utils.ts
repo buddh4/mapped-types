@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import { Type } from "./type.interface";
 import * as classValidator from 'class-validator';
 import { getMetadataStorage } from "class-validator";
+import { ValidationMetadata } from "class-validator/types/metadata/ValidationMetadata";
 
 export function applyIsOptionalDecorator(
   targetClass: Function,
@@ -13,6 +14,7 @@ export function applyIsOptionalDecorator(
   const decoratorFactory = classValidator.IsOptional();
   decoratorFactory(targetClass.prototype, propertyKey);
 }
+
 export function inheritPropertyInitializers(
   target: Record<string, any>,
   sourceClass: Type<any>,
@@ -34,7 +36,9 @@ export function inheritPropertyInitializers(
       .forEach((propertyName) => {
         target[propertyName] = tempInstance[propertyName];
       });
-  } catch {}
+  } catch {
+    // Nothing todo...
+  }
 }
 
 
@@ -46,51 +50,42 @@ export function inheritValidationMetadata(
   if (!isClassValidatorAvailable()) {
     return;
   }
-  try {
-    const metadataStorage: classValidator.MetadataStorage = (
-      classValidator as any
-    ).getMetadataStorage
-      ? (classValidator as any).getMetadataStorage()
-      : classValidator.getFromContainer(classValidator.MetadataStorage);
+  const metadataStorage: classValidator.MetadataStorage = (
+    classValidator as any
+  ).getMetadataStorage
+    ? (classValidator as any).getMetadataStorage()
+    : classValidator.getFromContainer(classValidator.MetadataStorage);
 
-    const getTargetValidationMetadatasArgs = [parentClass, null!, false, false];
-    const targetMetadata: ReturnType<
-      typeof metadataStorage.getTargetValidationMetadatas
-      > = (metadataStorage.getTargetValidationMetadatas as Function)(
-      ...getTargetValidationMetadatasArgs,
-    );
-    return targetMetadata
-      .filter(
-        ({ propertyName }) =>
-          !isPropertyInherited || isPropertyInherited(propertyName),
-      )
-      .map((value) => {
-        const originalType = Reflect.getMetadata(
+  const getTargetValidationMetadatasArgs = [parentClass, null!, false, false];
+  const targetMetadata: ReturnType<typeof metadataStorage.getTargetValidationMetadatas> = (metadataStorage.getTargetValidationMetadatas as Function)(
+    ...getTargetValidationMetadatasArgs,
+  );
+  return targetMetadata
+    .filter(
+      ({propertyName}) =>
+        !isPropertyInherited || isPropertyInherited(propertyName),
+    )
+    .map((value) => {
+      const originalType = Reflect.getMetadata(
+        'design:type',
+        parentClass.prototype,
+        value.propertyName,
+      );
+      if (originalType) {
+        Reflect.defineMetadata(
           'design:type',
-          parentClass.prototype,
+          originalType,
+          targetClass.prototype,
           value.propertyName,
         );
-        if (originalType) {
-          Reflect.defineMetadata(
-            'design:type',
-            originalType,
-            targetClass.prototype,
-            value.propertyName,
-          );
-        }
+      }
 
-        metadataStorage.addValidationMetadata({
-          ...value,
-          target: targetClass,
-        });
-        return value.propertyName;
+      metadataStorage.addValidationMetadata({
+        ...value,
+        target: targetClass,
       });
-  } catch (err) {
-    console.error(
-      `Validation ("class-validator") metadata cannot be inherited for "${parentClass.name}" class.`,
-    );
-    console.error(err);
-  }
+      return value.propertyName;
+    });
 }
 
 type TransformMetadataKey =
@@ -107,27 +102,20 @@ export function inheritTransformationMetadata(
   if (!isClassTransformerAvailable()) {
     return;
   }
-  try {
-    const transformMetadataKeys: TransformMetadataKey[] = [
-      '_excludeMetadatas',
-      '_exposeMetadatas',
-      '_transformMetadatas',
-      '_typeMetadatas',
-    ];
-    transformMetadataKeys.forEach((key) =>
-      inheritTransformerMetadata(
-        key,
-        parentClass,
-        targetClass,
-        isPropertyInherited,
-      ),
-    );
-  } catch (err) {
-    console.error(
-      `Transformer ("class-transformer") metadata cannot be inherited for "${parentClass.name}" class.`,
-    );
-    console.error(err);
-  }
+  const transformMetadataKeys: TransformMetadataKey[] = [
+    '_excludeMetadatas',
+    '_exposeMetadatas',
+    '_transformMetadatas',
+    '_typeMetadatas',
+  ];
+  transformMetadataKeys.forEach((key) =>
+    inheritTransformerMetadata(
+      key,
+      parentClass,
+      targetClass,
+      isPropertyInherited,
+    ),
+  );
 }
 
 function inheritTransformerMetadata(
@@ -149,10 +137,8 @@ function inheritTransformerMetadata(
 
   while (parentClass && parentClass !== Object) {
     if (metadataStorage[key].has(parentClass)) {
-      const metadataMap = metadataStorage[key] as Map<
-        Function,
-        Map<string, any>
-        >;
+      const metadataMap = metadataStorage[key] as Map<Function,
+        Map<string, any>>;
       const parentMetadata = metadataMap.get(parentClass);
 
       const targetMetadataEntries: Iterable<[string, any]> = Array.from(
@@ -168,7 +154,7 @@ function inheritTransformerMetadata(
             }));
             return [key, targetMetadata];
           }
-          return [key, { ...metadata, target: targetClass }];
+          return [key, {...metadata, target: targetClass}];
         });
 
       if (metadataMap.has(targetClass)) {
