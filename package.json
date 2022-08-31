@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "author": "Julian Harrer",
   "description": "Mapped types helper classes for class-validator library",
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": ["class-validator", "Helper", "Mapping"],
   "main": "lib/index.ts",
   "types": "lib/index.d.ts",
