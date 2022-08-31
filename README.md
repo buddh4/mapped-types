@@ -1,3 +1,7 @@
+<p align="right">
+ <img src="https://github.com/buddh4/mapped-types/actions/workflows/jest.yml/badge.svg" />
+</p>
+
 # Description
 
 This library provides mapped types for creating dynamic model classes and [class-validator](https://github.com/typestack/class-validator) validation schemas with
