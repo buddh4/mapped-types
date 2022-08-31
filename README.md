@@ -11,7 +11,7 @@ the help of following classes:
 This library is heavily based on the implementation of the [@nestjs/swagger](https://github.com/nestjs/swagger)
 module but contains some modifications as:
 
-- Removed all nestjs dependencies and nestjs/swagger related metadata code
+- Removed all `nestjs` dependencies and `nestjs/swagger` related metadata code
 - Use of real inheritance in `PartialType` and `IntersectionType`, as opposed to property only inheritance
 - Pass constructor arguments to inherited constructor
 
@@ -47,7 +47,7 @@ class UpdateArticelDto extends PartialType(CreateDto) {}
 
 ## OmitType
 
-With the `OmitType` you can create a subclass which omits all selected fields their validations.
+With the `OmitType` you can create a subclass which omits all selected fields and their validations.
 
 ```typescript
 import { IsString } from 'class-validator';
@@ -126,11 +126,3 @@ it with an `@Expose`.
 ## Class level Exclude and Expose are ignored
 
 You need to manually set `@Expose` or `@Exclude` on the newly created types if required.
-
-## Intersection type inheritance
-
-
-
-## Omit and Pick type inheritance
-
-The `OmitType` and `PickType` does not inherit class functions, only properties.
