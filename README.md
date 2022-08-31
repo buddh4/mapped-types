@@ -61,7 +61,7 @@ class UserDto {
   password;
 }
 
-class UserInfoDto extends OmitType(CreateDto, ['password']) {}
+class UserInfoDto extends OmitType(UserDto, ['password']) {}
 ```
 
 **Notes:**
@@ -85,7 +85,7 @@ class UserDto {
   password;
 }
 
-class UserInfoDto extends PickType(CreateDto, ['username']) {}
+class UserInfoDto extends PickType(UserDto, ['username']) {}
 ```
 
 **Notes:**
