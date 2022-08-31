@@ -1,8 +1,11 @@
 {
   "name": "@buddh4/mapped-types",
   "version": "1.0.0",
+  "author": "Julian Harrer",
   "description": "Mapped types helper classes for class-validator library",
-  "main": "index.ts",
+  "keywords": ["class-validator", "Helper", "Mapping"],
+  "main": "lib/index.ts",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
@@ -12,10 +15,12 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "build": "tsc -p tsconfig.build.json",
+    "version" : "npm run format && git add -A src",
+    "postversion" : "git push && git push --tags",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint"
   },
-  "author": "",
+  "repository": "https://github.com/buddh4/mapped-types",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.0.0",
