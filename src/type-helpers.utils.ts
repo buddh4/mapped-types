@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { Type } from "./type.interface";
 import * as classValidator from 'class-validator';
 import { getMetadataStorage } from "class-validator";
-import { ValidationMetadata } from "class-validator/types/metadata/ValidationMetadata";
+import { isBrowser } from "./is-browser.utils";
 
 export function applyIsOptionalDecorator(
   targetClass: Function,
@@ -124,13 +124,16 @@ function inheritTransformerMetadata(
   targetClass: Function,
   isPropertyInherited?: (key: string) => boolean,
 ) {
+
+  if(isBrowser()) {
+    return;
+  }
+
   let classTransformer: any;
   try {
     /** "class-transformer" >= v0.3.x */
     classTransformer = require('class-transformer/cjs/storage');
   } catch {
-    /** "class-transformer" <= v0.3.x */
-    classTransformer = require('class-transformer/storage');
   }
   const metadataStorage /*: typeof import('class-transformer/types/storage').defaultMetadataStorage */ =
     classTransformer.defaultMetadataStorage;
@@ -193,3 +196,4 @@ export function getValidationFields<T>(type: Type<T>) {
   const validationMetas = getMetadataStorage().getTargetValidationMetadatas(type, type.name, true, false);
   return validationMetas?.map(meta => meta.propertyName) || [];
 }
+
