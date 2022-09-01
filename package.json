@@ -15,7 +15,7 @@
     "Mapping"
   ],
   "files": [
-    "lib/**/*"
+    "dist/**/*"
   ],
   "scripts": {
     "test": "jest",

@@ -2,7 +2,6 @@ import 'reflect-metadata'
 import { Type } from "./type.interface";
 import * as classValidator from 'class-validator';
 import { getMetadataStorage } from "class-validator";
-import { isBrowser } from "./is-browser.utils";
 
 export function applyIsOptionalDecorator(
   targetClass: Function,
@@ -125,16 +124,14 @@ function inheritTransformerMetadata(
   isPropertyInherited?: (key: string) => boolean,
 ) {
 
-  if(isBrowser()) {
+ /* if(isBrowser()) {
     return;
-  }
+  }*/
 
-  let classTransformer: any;
-  try {
-    /** "class-transformer" >= v0.3.x */
-    classTransformer = require('class-transformer/cjs/storage');
-  } catch {
-  }
+  const classTransformer = require('class-transformer/cjs/storage');
+
+  console.log(classTransformer.defaultMetadataStorage);
+
   const metadataStorage /*: typeof import('class-transformer/types/storage').defaultMetadataStorage */ =
     classTransformer.defaultMetadataStorage;
 
