@@ -185,6 +185,6 @@ function isClassTransformerAvailable() {
 
 export function getValidationFields<T>(type: Type<T>) {
   const validationMetas = getMetadataStorage().getTargetValidationMetadatas(type, type.name, true, false);
-  return validationMetas?.map(meta => meta.propertyName) || [];
+  return new Set(validationMetas?.map(meta => meta.propertyName));
 }
 
