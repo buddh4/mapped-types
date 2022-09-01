@@ -1,6 +1,10 @@
 # mapped-types changelog
 
-## 1.1.0
+## 1.2.0 - unreleased
+
+- Make use of Set in `getValidationFields` to filter out duplicates
+
+## 1.1.0 - 01.09.22
 
 - Added cjs and esm build
 - Added missing type exports
