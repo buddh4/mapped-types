@@ -1,0 +1,5 @@
+# mapped-types changelog
+
+## 1.1.0
+
+- Added cjs and esm build

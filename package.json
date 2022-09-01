@@ -1,6 +1,6 @@
 {
   "name": "@buddh4/mapped-types",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Julian Harrer",
   "description": "Mapped types helper classes for class-validator library",
   "main": "dist/cjs/index.js",
