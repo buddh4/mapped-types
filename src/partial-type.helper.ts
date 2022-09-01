@@ -2,8 +2,6 @@ import { Type } from "./type.interface";
 
 import {
   applyIsOptionalDecorator, getValidationFields,
-  inheritTransformationMetadata,
-  inheritValidationMetadata
 } from './type-helpers.utils';
 
 /**
@@ -17,9 +15,6 @@ import {
 export function PartialType<T>(classRef: Type<T>): Type<Partial<T>> {
   const RefClass = classRef as any;
   abstract class PartialTypeClass extends RefClass {}
-
-  inheritValidationMetadata(classRef, PartialTypeClass);
-  inheritTransformationMetadata(classRef, PartialTypeClass);
 
   getValidationFields(classRef).forEach((key) => applyIsOptionalDecorator(PartialTypeClass, key));
   return PartialTypeClass as Type<Partial<T>>;

@@ -19,6 +19,10 @@ module but contains some modifications as:
 - Use of real inheritance in `PartialType` and `IntersectionType`, as opposed to property only inheritance
 - Pass constructor arguments to inherited constructor
 
+> Note: In browser environments the inheritance of `@Exclude` and `@Expose` decorators 
+> for `Pick-`, `Omit-`, and the second class provided to `IntersectionType` does not work due to 
+> the following limitation of the `class-transformer` library [issue](https://github.com/typestack/class-transformer/issues/563).
+
 # Usage
 
 The provided type helper classes can be used to create subclasses with altered validation schemas, without the need

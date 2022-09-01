@@ -20,8 +20,6 @@ export function IntersectionType<A, B>(
     }
   }
 
-  inheritValidationMetadata(classARef, IntersectionTypeClass);
-  inheritTransformationMetadata(classARef, IntersectionTypeClass);
   inheritValidationMetadata(classBRef, IntersectionTypeClass);
   inheritTransformationMetadata(classBRef, IntersectionTypeClass);
 

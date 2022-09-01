@@ -3,3 +3,5 @@
 ## 1.1.0
 
 - Added cjs and esm build
+- Added missing type exports
+- Removed unnecessary transformation and metadata property inheritance for types using real class inheritance

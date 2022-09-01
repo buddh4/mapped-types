@@ -124,13 +124,7 @@ function inheritTransformerMetadata(
   isPropertyInherited?: (key: string) => boolean,
 ) {
 
- /* if(isBrowser()) {
-    return;
-  }*/
-
   const classTransformer = require('class-transformer/cjs/storage');
-
-  console.log(classTransformer.defaultMetadataStorage);
 
   const metadataStorage /*: typeof import('class-transformer/types/storage').defaultMetadataStorage */ =
     classTransformer.defaultMetadataStorage;
