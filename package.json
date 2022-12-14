@@ -31,7 +31,7 @@
   "repository": "https://github.com/buddh4/mapped-types",
   "license": "MIT",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^9.0.1",
+    "@rollup/plugin-typescript": "^10.0.1",
     "@types/jest": "^29.0.0",
     "jest": "^28.1.3",
     "prettier": "^2.7.1",
