@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 import { Type } from "./type.interface";
 import * as classValidator from 'class-validator';
+import * as classTransformer from 'class-transformer';
 import { getMetadataStorage } from "class-validator";
 
 export function applyIsOptionalDecorator(
@@ -166,21 +167,11 @@ function inheritTransformerMetadata(
 }
 
 function isClassValidatorAvailable() {
-  try {
-    require('class-validator');
-    return true;
-  } catch {
-    return false;
-  }
+  return !!classValidator;
 }
 
 function isClassTransformerAvailable() {
-  try {
-    require('class-transformer');
-    return true;
-  } catch {
-    return false;
-  }
+  return !!classTransformer;
 }
 
 export function getValidationFields<T>(type: Type<T>) {

@@ -1,5 +1,7 @@
 # mapped-types changelog
 
+## 1.2.1 - fix: Check of isClassValidator fails in some environments
+
 ## 1.2.0 - unreleased
 
 - Make use of Set in `getValidationFields` to filter out duplicates
